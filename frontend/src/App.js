@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
+import './App.css';
 
 const API = 'http://localhost:5000/api/tasks';
 
@@ -32,10 +33,19 @@ function App() {
     setTasks(tasks.filter(t => t._id !== id));
   };
 
+  const completedCount = tasks.filter(t => t.completed).length;
+
   return (
-    <div style={{ maxWidth: '600px', margin: '40px auto', fontFamily: 'Arial' }}>
-      <h1>Task Manager</h1>
+    <div className="app">
+      <div className="app-header">
+        <h1>Task Manager</h1>
+        <p>Stay organized, get things done</p>
+      </div>
       <TaskForm addTask={addTask} />
+      <div className="stats">
+        <span>{tasks.length} total tasks</span>
+        <span>{completedCount} completed</span>
+      </div>
       <TaskList tasks={tasks} toggleTask={toggleTask} deleteTask={deleteTask} />
     </div>
   );
